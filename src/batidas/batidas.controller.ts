@@ -1,12 +1,15 @@
 import { Controller, Get, Post, Put, Delete, Param, Query, Body } from '@nestjs/common';
 import { CreateBatidaDto } from './dto/create-batida.dto';
 import { UpdateBatidaDto } from './dto/update-batida.dto';
+import { BatidasService } from './batidas.service';
 
 @Controller('batidas')
 export class BatidasController {
+    constructor(private readonly batidasService: BatidasService) {}
+
     @Get()
-    getBatidas(@Query('type') type: string) {
-        return [{ type }]
+    getBatidas() {
+        return this.batidasService.getResult()
     }
 
     @Get(':id')
@@ -16,9 +19,7 @@ export class BatidasController {
 
     @Post()
     createBatida(@Body() createBatidaDto: CreateBatidaDto) {
-        return {
-            momento: createBatidaDto.momento
-        }
+        return this.batidasService.createBatida(createBatidaDto)
     }
 
     @Put(':id')
