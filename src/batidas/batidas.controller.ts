@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete, Param, Query, Body } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Query, Body, BadRequestException } from '@nestjs/common';
 import { CreateBatidaDto } from './dto/create-batida.dto';
 import { UpdateBatidaDto } from './dto/update-batida.dto';
 import { BatidasService } from './batidas.service';
@@ -19,7 +19,12 @@ export class BatidasController {
 
     @Post()
     createBatida(@Body() createBatidaDto: CreateBatidaDto) {
-        return this.batidasService.createBatida(createBatidaDto)
+        try {
+            return this.batidasService.createBatida(createBatidaDto)
+        }
+        catch (err) {
+            throw new BadRequestException('Something bad happened')
+        }
     }
 
     @Put(':id')

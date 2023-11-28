@@ -8,6 +8,10 @@ export class BatidasService {
   private readonly minutosPorDia: number
 
   getResult() {
+    if (!this.dia) {
+      throw new Error('Batida not yet recored')
+    }
+
     return {
       dia: this.dia,
       pontos: this.pontos
