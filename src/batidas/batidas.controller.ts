@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete, Param, Query, Body, BadRequestException } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Query, Body, BadRequestException, ValidationPipe } from '@nestjs/common';
 import { CreateBatidaDto } from './dto/create-batida.dto';
 import { UpdateBatidaDto } from './dto/update-batida.dto';
 import { BatidasService } from './batidas.service';
@@ -18,7 +18,7 @@ export class BatidasController {
     }
 
     @Post()
-    createBatida(@Body() createBatidaDto: CreateBatidaDto) {
+    createBatida(@Body(new ValidationPipe()) createBatidaDto: CreateBatidaDto) {
         try {
             return this.batidasService.createBatida(createBatidaDto)
         }
